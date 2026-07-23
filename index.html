@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WILDWESTS — Minecraft Server</title>
+    <style>
+        /* CSS ИМПОРТ ПИКСЕЛЬНОГО ШРИФТА */
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+        :root {
+            --purple-main: #8a2be2;
+            --purple-bright: #bf00ff;
+            --pink-neon: #ff007f;
+            --bg-dark: #0d0614;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            /* Указываем вашу картинку на фон */
+            background-image: url('bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #fff;
+            font-family: 'VT323', monospace;
+            font-size: 22px;
+            overflow-x: hidden;
+        }
+
+        /* Декоративные сюрреалистичные элементы на фоне (ПАРТИКЛЫ) */
+        .floating-object {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .orb {
+            top: 10%;
+            left: 5%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #fff, var(--purple-bright), transparent);
+            border-radius: 50%;
+            box-shadow: 0 0 30px var(--purple-bright);
+        }
+
+        .eye {
+            top: 70%;
+            right: 5%;
+            font-size: 50px;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Шапка сайта */
+        header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px 20px 20px;
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 
+                4px 4px 0px var(--purple-main),
+                -4px -4px 0px var(--pink-neon),
+                0 0 20px rgba(191, 0, 255, 0.8);
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            animation: glitch 3s infinite;
+        }
+
+        /* Навигация */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            background: rgba(26, 9, 51, 0.9);
+            color: #00ffff;
+            border: 3px solid var(--purple-bright);
+            padding: 12px 20px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px #000;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--purple-bright);
+            color: #fff;
+            box-shadow: 2px 2px 0px #000;
+            transform: translate(2px, 2px);
+        }
+
+        /* Контейнер контента */
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px 60px;
+        }
+
+        .content-box {
+            background: rgba(18, 5, 33, 0.85);
+            border: 4px ridge var(--purple-main);
+            box-shadow: 0 0 25px rgba(138, 43, 226, 0.4), inset 0 0 15px rgba(0,0,0,0.8);
+            padding: 30px;
+            backdrop-filter: blur(5px);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: #ff007f;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed var(--purple-bright);
+            padding-bottom: 10px;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            color: #00ffff;
+            margin: 25px 0 15px;
+        }
+
+        p {
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        /* Стили для Правил */
+        .rule-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--pink-neon);
+            margin-bottom: 15px;
+            padding: 10px 15px;
+        }
+
+        .rule-num {
+            color: #00ffff;
+            font-weight: bold;
+        }
+
+        .punishment {
+            color: #ff5555;
+            font-size: 0.9em;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* Стили для Доната */
+        .donate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .donate-card {
+            background: #14052b;
+            border: 2px dashed #00ffff;
+            padding: 18px 12px;
+            text-align: center;
+            position: relative;
+            clip-path: polygon(0% 5px, 5px 0%, calc(100% - 5px) 0%, 100% 5px, 100% calc(100% - 5px), calc(100% - 5px) 100%, 5px 100%, 0% calc(100% - 5px));
+            transition: transform 0.2s;
+        }
+
+        .donate-card:hover {
+            transform: scale(1.05) rotate(-1deg);
+            border-color: var(--pink-neon);
+            background: #230848;
+        }
+
+        .donate-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.95rem;
+            color: #ffff55;
+            margin-bottom: 10px;
+        }
+
+        .donate-desc {
+            font-size: 0.95rem;
+            color: #00ffff;
+            line-height: 1.3;
+        }
+
+        /* Стили для Контактов */
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-item {
+            margin-bottom: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border: 1px solid var(--purple-main);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-item a {
+            color: #00ffff;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+            color: var(--pink-neon);
+        }
+
+        footer {
+            text-align: center;
+            font-size: 16px;
+            color: #ccc;
+            margin-top: 40px;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 4px 4px 0px var(--purple-main), -4px -4px 0px var(--pink-neon); }
+            50% { text-shadow: -3px 2px 0px var(--purple-main), 3px -2px 0px var(--pink-neon); }
+            100% { text-shadow: 4px 4px 0px var(--purple-main), -4px -4px 0px var(--pink-neon); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="floating-object orb"></div>
+    <div class="floating-object eye">👁️</div>
+
+    <header>
+        <div class="logo">WILDWESTS</div>
+        <nav>
+            <button class="nav-btn active" data-tab="about">О НАС</button>
+            <button class="nav-btn" data-tab="features">ОСОБЕННОСТИ</button>
+            <button class="nav-btn" data-tab="rules">ПРАВИЛА</button>
+            <button class="nav-btn" data-tab="donate">ДОНАТ</button>
+            <button class="nav-btn" data-tab="contacts">КОНТАКТЫ</button>
+        </nav>
+    </header>
+
+    <main>
+        <div class="content-box">
+            
+            <div id="about" class="tab-content active">
+                <h2>ДОБРО ПОЖАЛОВАТЬ</h2>
+                <p>Привет! Мы — <strong>WildWests</strong>, одна из лучших в будущем команд по майнкрафту! У нас имеется свой сервер, чатик для общения, и все что вам понадобится!</p>
+                <p>Здесь вы получите все: Вас не будут ставить в рамки, унижать, обижать. Вас ждет отзывчивая администрация и доброе комьюнити, общение, приятная атмосфера и веселье!</p>
+                <p>Мы стоим на хорошем платном хостинге чтобы вы чувствовали себя максимально комфортно, и не мучались из-за плохого пинга!</p>
+                <p>Мы стараемся делать все, чтобы нашим игрокам нравилось абсолютно все. Мы прорабатываем каждую деталь и интересуемся мнением участников! Вы можете предлагать свои идеи — мы будем их выслушивать и воплощать на нашем проекте!</p>
+                <p style="color: #ffff55;">Мы ответственно относимся к проекту и даем вам обещание: вам обязательно понравится у нас!</p>
+            </div>
+
+            <div id="features" class="tab-content">
+                <h2>ГОСУДАРСТВА И КЛАНЫ</h2>
+                <p>На сервере вы можете создавать коалиции, республики, государства, кланы и целые королевства!</p>
+                
+                <h3>ПРАВИЛА ВОЙН:</h3>
+                
+                <div class="rule-item">
+                    <span class="rule-num">2.0</span> Если вы начинаете войну с другим кланом, в двух кланах автоматически включается режим анархии. Вы можете воевать совершенно любыми способами! Используя для этого абсолютно все, но если администрация спалит вас с читами — вы понесете наказание.
+                </div>
+
+                <div class="rule-item">
+                    <span class="rule-num">2.1</span> Ресурсы, утраченные во время войны, не будут возвращены! Вы теряете их навсегда.
+                </div>
+
+                <p style="margin-top: 20px;">Также кланы могут проводить переговоры, подписывать договоры, капитулировать и делать всё, что происходит при реальных боевых действиях!</p>
+            </div>
+
+            <div id="rules" class="tab-content">
+                <h2>ПРАВИЛА СЕРВЕРА</h2>
+                
+                <div class="rule-item">
+                    <span class="rule-num">1.0</span> Гриферство на сервере запрещено! В этот запрет входит: кража вещей, ломание баз игроков.
+                    <span class="punishment">Наказание: Варн | Повторно: Бан на 2 дня.</span>
+                </div>
+
+                <div class="rule-item">
+                    <span class="rule-num">1.1</span> Использование читов, эксплоитов, уязвимостей карается наказанием!
+                    <span class="punishment">Наказание: Бан на 24 часа | Повторно: Увеличение срока.</span>
+                </div>
+
+                <div class="rule-item">
+                    <span class="rule-num">1.2</span> Помеха работе сервера. В данный пункт входит: постройка любых объектов, мешающих работе сервера (например — лагмашины).
+                    <span class="punishment">Наказание: Бан по IP навсегда.</span>
+                </div>
+
+                <h3>ПРАВИЛА ЧАТА</h3>
+
+                <div class="rule-item">
+                    <span class="rule-num">3.0</span> Сильные оскорбления в сторону любых людей, будь то гости, обычные участники или администраторы. Переход на личности / оскорбление родителей.
+                    <span class="punishment">Наказание: Варн на неделю | За родителей/личности: Наказание удваивается.</span>
+                </div>
+
+                <div class="rule-item">
+                    <span class="rule-num">3.1</span> Ссоры в чате. Начало перепалки между участниками.
+                    <span class="punishment">Наказание: Устное предупреждение | Продолжение конфликта: Варн на 3 дня.</span>
+                </div>
+
+                <div class="rule-item">
+                    <span class="rule-num">3.2</span> Спам / флуд (более 10 одинаковых сообщений или использование ботов).
+                    <span class="punishment">Наказание: Спам — Варн на 5 дней | Флуд — Варн на 3 дня.</span>
+                </div>
+            </div>
+
+            <div id="donate" class="tab-content">
+                <h2>ДОНАТ ПРИВИЛЕГИИ</h2>
+                
+                <div class="donate-grid">
+                    <div class="donate-card">
+                        <div class="donate-title">VIP</div>
+                        <p class="donate-desc">Подробные возможности каждой привилегии - команда на сервере /donate</p>
+                    </div>
+                    <div class="donate-card">
+                        <div class="donate-title">PREMIUM</div>
+                        <p class="donate-desc">Подробные возможности каждой привилегии - команда на сервере /donate</p>
+                    </div>
+                    <div class="donate-card">
+                        <div class="donate-title">КРЕАТИВ</div>
+                        <p class="donate-desc">Подробные возможности каждой привилегии - команда на сервере /donate</p>
+                    </div>
+                    <div class="donate-card">
+                        <div class="donate-title">АДМИН</div>
+                        <p class="donate-desc">Подробные возможности каждой привилегии - команда на сервере /donate</p>
+                    </div>
+                    <div class="donate-card">
+                        <div class="donate-title">СУПЕР-АДМИН</div>
+                        <p class="donate-desc">Подробные возможности каждой привилегии - команда на сервере /donate</p>
+                    </div>
+                    <div class="donate-card">
+                        <div class="donate-title">БОГ</div>
+                        <p class="donate-desc">Подробные возможности каждой привилегии - команда на сервере /donate</p>
+                    </div>
+                    <div class="donate-card">
+                        <div class="donate-title">СОЗДАТЕЛЬ</div>
+                        <p class="donate-desc">Подробные возможности каждой привилегии - команда на сервере /donate</p>
+                    </div>
+                    <div class="donate-card">
+                        <div class="donate-title">ОПЕРАТОР</div>
+                        <p class="donate-desc">Подробные возможности каждой привилегии - команда на сервере /donate</p>
+                    </div>
+                    <div class="donate-card">
+                        <div class="donate-title">ОСНОВАТЕЛЬ</div>
+                        <p class="donate-desc">Подробные возможности каждой привилегии - команда на сервере /donate</p>
+                    </div>
+                    <div class="donate-card">
+                        <div class="donate-title">ВЛАДЕЛЕЦ СЕРВЕРА</div>
+                        <p class="donate-desc">Подробные возможности каждой привилегии - команда на сервере /donate</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="contacts" class="tab-content">
+                <h2>НАШИ КОНТАКТЫ</h2>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <span> TELEGRAM CHANNEL:</span>
+                        <a href="https://t.me/wildwest_mc" target="_blank">@wildwest_mc</a>
+                    </li>
+                    <li class="contact-item">
+                        <span> TELEGRAM BOT:</span>
+                        <a href="https://t.me/ww_mcbot" target="_blank">@ww_mcbot</a>
+                    </li>
+                    <li class="contact-item">
+                        <span> TIKTOK:</span>
+                        <a href="#" target="_blank">@mcwildwest</a>
+                    </li>
+                    <li class="contact-item">
+                        <span> DISCORD:</span>
+                        <a href="#" target="_blank">[ В РАЗРАБОТКЕ ]</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 WILDWESTS PROJECT. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.nav-btn');
+            const contents = document.querySelectorAll('.tab-content');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    contents.forEach(content => content.classList.remove('active'));
+
+                    this.classList.add('active');
+                    document.getElementById(targetTab).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
