@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WILDWESTS — Minecraft Server</title>
     <style>
-        /* CSS ИМПОРТ ПИКСЕЛЬНОГО ШРИФТА */
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
         :root {
@@ -23,7 +22,6 @@
 
         body {
             background-color: var(--bg-dark);
-            /* Указываем вашу картинку на фон */
             background-image: url('bg.png');
             background-size: cover;
             background-position: center;
@@ -35,7 +33,6 @@
             overflow-x: hidden;
         }
 
-        /* Декоративные сюрреалистичные элементы на фоне (ПАРТИКЛЫ) */
         .floating-object {
             position: fixed;
             pointer-events: none;
@@ -66,7 +63,6 @@
             50% { transform: translateY(-20px) rotate(10deg); }
         }
 
-        /* Шапка сайта */
         header {
             position: relative;
             z-index: 10;
@@ -88,7 +84,6 @@
             animation: glitch 3s infinite;
         }
 
-        /* Навигация */
         nav {
             display: flex;
             justify-content: center;
@@ -115,7 +110,6 @@
             transform: translate(2px, 2px);
         }
 
-        /* Контейнер контента */
         main {
             position: relative;
             z-index: 10;
@@ -161,8 +155,6 @@
             line-height: 1.5;
             margin-bottom: 15px;
         }
-
-        /* Стили для Правил */
         .rule-item {
             background: rgba(255, 255, 255, 0.05);
             border-left: 4px solid var(--pink-neon);
@@ -182,7 +174,6 @@
             margin-top: 5px;
         }
 
-        /* Стили для Доната */
         .donate-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -219,7 +210,6 @@
             line-height: 1.3;
         }
 
-        /* Стили для Контактов */
         .contact-list {
             list-style: none;
         }
